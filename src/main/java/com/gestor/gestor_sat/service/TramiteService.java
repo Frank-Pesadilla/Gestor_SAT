@@ -19,11 +19,20 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.gestor.gestor_sat.dto.HistorialTramiteDTO; 
+<<<<<<< HEAD
+=======
+import com.gestor.gestor_sat.model.Archivo;
+import com.gestor.gestor_sat.model.Cliente;
+>>>>>>> Mafer
 import com.gestor.gestor_sat.model.ConsultaTramite;
 
+import java.util.stream.Collectors; 
 @Service
 @RequiredArgsConstructor
 @Slf4j
+
+
+
 public class TramiteService {
     
     private final TramiteRepository tramiteRepository;
@@ -82,4 +91,45 @@ public class TramiteService {
                 .archivos(null)
                 .build();
     }
+
+    @Transactional(readOnly = true) 
+public Page<HistorialTramiteDTO> obtenerHistorialCliente(Long idCliente, Pageable pageable) { 
+    Cliente cliente = clienteRepository.findById(idCliente) 
+            .orElseThrow(() -> new ClienteNoEncontradoException( 
+                "Cliente con ID " + idCliente + " no encontrado")); 
+     
+    Page<ConsultaTramite> consultas = consultaTramiteRepository 
+            .findByClienteIdOrderByFechaCreacionDesc(idCliente, pageable); 
+     
+    return consultas.map(this::convertirAHistorialDTO); 
+} 
+ 
+private HistorialTramiteDTO convertirAHistorialDTO(ConsultaTramite consulta) { 
+    return HistorialTramiteDTO.builder() 
+            .idConsulta(consulta.getId()) 
+            .idTramite(consulta.getTramite().getId()) 
+            .nombreTramite(consulta.getTramite().getNombre()) 
+            .descripcionTramite(consulta.getTramite().getDescripcion()) 
+            .tipoTramite(consulta.getTramite().getTipoTramite().getNombre()) 
+            .estado(consulta.getEstado().name()) 
+            .fechaCreacion(consulta.getFechaCreacion()) 
+            .fechaFinalizacion(consulta.getFechaFinalizacion()) 
+            .observaciones(consulta.getObservaciones()) 
+            .archivos(convertirArchivosDTO(consulta.getArchivos())) 
+            .build(); 
+} 
+ 
+private List<HistorialTramiteDTO.ArchivoInfoDTO> convertirArchivosDTO(List<Archivo> archivos) { 
+    if (archivos == null) return null; 
+    return archivos.stream() 
+            .map(archivo -> HistorialTramiteDTO.ArchivoInfoDTO.builder() 
+                    .id(archivo.getId()) 
+                    .nombreArchivo(archivo.getNombreArchivo()) 
+                    .tipoMime(archivo.getTipoMime()) 
+                    .tamano(archivo.getTamano()) 
+                    .fechaSubida(archivo.getFechaSubida()) 
+                    .build()) 
+            .collect(Collectors.toList()); 
+} 
+    
 }

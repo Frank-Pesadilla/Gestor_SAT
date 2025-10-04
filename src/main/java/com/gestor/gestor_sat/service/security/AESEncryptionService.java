@@ -1,10 +1,20 @@
 package com.gestor.gestor_sat.service.security; 
  
+<<<<<<< HEAD
 import org.springframework.beans.factory.annotation.Value; 
 import org.springframework.stereotype.Service; 
 import javax.crypto.Cipher; 
 import javax.crypto.spec.SecretKeySpec; 
 import java.util.Base64; 
+=======
+import java.util.Base64; 
+
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service; 
+>>>>>>> Mafer
  
 @Service 
 public class AESEncryptionService { 
@@ -38,4 +48,8 @@ public class AESEncryptionService {
             throw new RuntimeException("Error al desencriptar: " + e.getMessage(), e); 
         } 
     } 
+<<<<<<< HEAD
 }
+=======
+} 
+>>>>>>> Mafer

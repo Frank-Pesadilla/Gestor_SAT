@@ -1,9 +1,18 @@
 package com.gestor.gestor_sat.dto; 
+<<<<<<< HEAD
 import lombok.AllArgsConstructor; 
 import lombok.Builder; 
 import lombok.Data; 
 import lombok.NoArgsConstructor; 
 import java.util.Map; 
+=======
+import java.util.Map;
+
+import lombok.AllArgsConstructor; 
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor; 
+>>>>>>> Mafer
 @Data 
 @Builder 
 @NoArgsConstructor 
@@ -15,4 +24,8 @@ private Map<String, Long> tramitesPorEstado;
 private Map<String, Long> topTiposTramites; 
 private Map<String, Long> tramitesPorMes; 
 private Map<String, Long> clientesNuevosPorMes; 
+<<<<<<< HEAD
 }
+=======
+} 
+>>>>>>> Mafer
