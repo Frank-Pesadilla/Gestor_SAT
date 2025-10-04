@@ -1,4 +1,3 @@
-Notificacion.java
 package com.gestor.gestor_sat.model;
 
 import com.gestor.gestor_sat.model.base.AuditableEntity;
@@ -30,6 +29,7 @@ public class Notificacion extends AuditableEntity {
     @Column(nullable = false, length = 20)
     private TipoNotificacion tipo;
     
+    @Builder.Default
     @Column(nullable = false)
     private Boolean leida = false;
     
