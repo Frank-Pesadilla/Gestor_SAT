@@ -7,21 +7,19 @@ import com.gestor.gestor_sat.exception.TipoTramiteNoEncontradoException;
 import com.gestor.gestor_sat.mapper.TramiteMapper;
 import com.gestor.gestor_sat.model.TipoTramite;
 import com.gestor.gestor_sat.model.Tramite;
+import com.gestor.gestor_sat.repository.ClienteRepository;
+import com.gestor.gestor_sat.repository.ConsultaTramiteRepository;
 import com.gestor.gestor_sat.repository.TipoTramiteRepository;
 import com.gestor.gestor_sat.repository.TramiteRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import org.hibernate.query.Page;
-import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.gestor.gestor_sat.dto.HistorialTramiteDTO; 
-import com.gestor.gestor_sat.model.Archivo;
-import com.gestor.gestor_sat.model.Cliente;
 import com.gestor.gestor_sat.model.ConsultaTramite;
-
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -31,6 +29,8 @@ public class TramiteService {
     private final TramiteRepository tramiteRepository;
     private final TipoTramiteRepository tipoTramiteRepository;
     private final TramiteMapper tramiteMapper;
+    private final ClienteRepository clienteRepository;
+    private final ConsultaTramiteRepository consultaTramiteRepository;
     
     @Transactional
     public TramiteResponseDTO registrarTramite(TramiteCreateDTO dto) {
@@ -55,43 +55,31 @@ public class TramiteService {
            
     }
 
-    @Transactional(readOnly = true) 
-    public Page<HistorialTramiteDTO> obtenerHistorialCliente(Long idCliente, Pageable pageable) { 
-        Cliente cliente = clienteRepository.findById(idCliente) 
-                .orElseThrow(() -> new ClienteNoEncontradoException( 
-                    "Cliente con ID " + idCliente + " no encontrado")); 
+    @Transactional(readOnly = true)
+    public Page<HistorialTramiteDTO> obtenerHistorialCliente(Long idCliente, Pageable pageable) {
+        // Validar que el cliente existe
+        clienteRepository.findById(idCliente)
+                .orElseThrow(() -> new ClienteNoEncontradoException(
+                    "Cliente con ID " + idCliente + " no encontrado"));
         
-        Page<ConsultaTramite> consultas = consultaTramiteRepository 
-                .findByClienteIdOrderByFechaCreacionDesc(idCliente, pageable); 
+        Page<ConsultaTramite> consultas = consultaTramiteRepository
+                .findByClienteIdClienteOrderByFechaTramiteDesc(idCliente, pageable);
         
-        return consultas.map(this::convertirAHistorialDTO); 
-    } 
-    
-    private HistorialTramiteDTO convertirAHistorialDTO(ConsultaTramite consulta) { 
-        return HistorialTramiteDTO.builder() 
-                .idConsulta(consulta.getId()) 
-                .idTramite(consulta.getTramite().getId()) 
-                .nombreTramite(consulta.getTramite().getNombre()) 
-                .descripcionTramite(consulta.getTramite().getDescripcion()) 
-                .tipoTramite(consulta.getTramite().getTipoTramite().getNombre()) 
-                .estado(consulta.getEstado().name()) 
-                .fechaCreacion(consulta.getFechaCreacion()) 
-                .fechaFinalizacion(consulta.getFechaFinalizacion()) 
-                .observaciones(consulta.getObservaciones()) 
-                .archivos(convertirArchivosDTO(consulta.getArchivos())) 
-                .build(); 
-    } 
-    
-    private List<HistorialTramiteDTO.ArchivoInfoDTO> convertirArchivosDTO(List<Archivo> archivos) { 
-        if (archivos == null) return null; 
-        return archivos.stream() 
-                .map(archivo -> HistorialTramiteDTO.ArchivoInfoDTO.builder() 
-                        .id(archivo.getId()) 
-                        .nombreArchivo(archivo.getNombreArchivo()) 
-                        .tipoMime(archivo.getTipoMime()) 
-                        .tamano(archivo.getTamano()) 
-                        .fechaSubida(archivo.getFechaSubida()) 
-                        .build()) 
-                .collect(Collectors.toList()); 
+        return consultas.map(this::convertirAHistorialDTO);
+    }
+
+    private HistorialTramiteDTO convertirAHistorialDTO(ConsultaTramite consulta) {
+        return HistorialTramiteDTO.builder()
+                .idConsulta(consulta.getIdConsultaTramite())
+                .idTramite(consulta.getTramite().getId())
+                .nombreTramite(consulta.getTramite().getNombre())
+                .descripcionTramite(consulta.getTramite().getDescripcion())
+                .tipoTramite(consulta.getTramite().getTipoTramite().getNombre())
+                .estado(consulta.getEstado().name())
+                .fechaCreacion(consulta.getFechaTramite())
+                .fechaFinalizacion(null)
+                .observaciones(null)
+                .archivos(null)
+                .build();
     }
 }
