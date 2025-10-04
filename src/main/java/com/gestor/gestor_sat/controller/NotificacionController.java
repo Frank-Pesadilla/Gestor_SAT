@@ -1,3 +1,4 @@
+// NotificacionController.java
 package com.gestor.gestor_sat.controller;
 
 import com.gestor.gestor_sat.dto.NotificacionCreateDTO;
@@ -77,4 +78,3 @@ public class NotificacionController {
         return ResponseEntity.ok(contador);
     }
 }
-
