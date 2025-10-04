@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 package com.gestor.gestor_sat.mapper;
 
 import com.gestor.gestor_sat.dto.DatosPlataformaDTO;
@@ -53,6 +54,8 @@ public class DatosMapper {
     }
 }
 =======
+=======
+>>>>>>> Mafer
 package com.gestor.gestor_sat.mapper; 
 import com.gestor.gestor_sat.dto.DatosPlataformaDTO; 
 import com.gestor.gestor_sat.model.Datos; 
@@ -100,5 +103,9 @@ public class DatosMapper {
          
         return dto; 
     } 
+<<<<<<< HEAD
+} 
+>>>>>>> Mafer
+=======
 } 
 >>>>>>> Mafer

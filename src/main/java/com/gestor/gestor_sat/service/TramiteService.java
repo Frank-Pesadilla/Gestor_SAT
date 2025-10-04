@@ -20,6 +20,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.gestor.gestor_sat.dto.HistorialTramiteDTO; 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+import com.gestor.gestor_sat.model.Archivo;
+import com.gestor.gestor_sat.model.Cliente;
+>>>>>>> Mafer
 =======
 import com.gestor.gestor_sat.model.Archivo;
 import com.gestor.gestor_sat.model.Cliente;
@@ -64,6 +69,7 @@ public class TramiteService {
            
     }
 
+<<<<<<< HEAD
     @Transactional(readOnly = true)
     public Page<HistorialTramiteDTO> obtenerHistorialCliente(Long idCliente, Pageable pageable) {
         // Validar que el cliente existe
@@ -92,6 +98,8 @@ public class TramiteService {
                 .build();
     }
 
+=======
+>>>>>>> Mafer
     @Transactional(readOnly = true) 
 public Page<HistorialTramiteDTO> obtenerHistorialCliente(Long idCliente, Pageable pageable) { 
     Cliente cliente = clienteRepository.findById(idCliente) 

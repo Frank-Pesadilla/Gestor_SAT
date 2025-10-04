@@ -6,11 +6,19 @@ import com.gestor.gestor_sat.dto.HistorialTramiteDTO;
 import com.gestor.gestor_sat.service.ClienteService;
 import com.gestor.gestor_sat.service.TramiteService;
 <<<<<<< HEAD
+<<<<<<< HEAD
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+=======
+
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+
+import org.springframework.data.domain.PageRequest;
+>>>>>>> Mafer
 =======
 
 import jakarta.validation.Valid;
@@ -38,6 +46,7 @@ public class ClienteController {
         return new ResponseEntity<>(clienteRegistrado, HttpStatus.CREATED);
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
     
     @GetMapping("/{id}/historial")
     public ResponseEntity<Page<HistorialTramiteDTO>> obtenerHistorialCliente(
@@ -50,6 +59,8 @@ public class ClienteController {
         return ResponseEntity.ok(historial);
     }
 =======
+=======
+>>>>>>> Mafer
 
     private final TramiteService tramiteService; // Agregar esta inyección 
  
@@ -64,5 +75,8 @@ public ResponseEntity<Page<HistorialTramiteDTO>> obtenerHistorialCliente(
     Page<HistorialTramiteDTO> historial = tramiteService.obtenerHistorialCliente(id, pageable); 
     return ResponseEntity.ok(historial); 
 }
+<<<<<<< HEAD
+>>>>>>> Mafer
+=======
 >>>>>>> Mafer
 }

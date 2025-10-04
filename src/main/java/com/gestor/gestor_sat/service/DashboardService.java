@@ -1,5 +1,6 @@
 package com.gestor.gestor_sat.service; 
 <<<<<<< HEAD
+<<<<<<< HEAD
 import com.gestor.gestor_sat.dto.EstadisticasDTO; 
 import com.gestor.gestor_sat.model.enums.TramiteEstado; 
 import com.gestor.gestor_sat.repository.ClienteRepository; 
@@ -13,6 +14,8 @@ import java.util.HashMap;
 import java.util.List; 
 import java.util.Map; 
 =======
+=======
+>>>>>>> Mafer
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.HashMap;
@@ -28,6 +31,9 @@ import com.gestor.gestor_sat.repository.ClienteRepository;
 import com.gestor.gestor_sat.repository.ConsultaTramiteRepository;
 
 import lombok.RequiredArgsConstructor; 
+<<<<<<< HEAD
+>>>>>>> Mafer
+=======
 >>>>>>> Mafer
  
 @Service 
@@ -37,6 +43,7 @@ public class DashboardService {
     private final ClienteRepository clienteRepository; 
     private final ConsultaTramiteRepository consultaTramiteRepository; 
      
+<<<<<<< HEAD
 <<<<<<< HEAD
     @Transactional(readOnly = true)
     public EstadisticasDTO obtenerEstadisticas() {
@@ -88,6 +95,8 @@ public class DashboardService {
         }
         return tramitesPorMes;
 =======
+=======
+>>>>>>> Mafer
     @Transactional(readOnly = true) 
     public EstadisticasDTO obtenerEstadisticas() { 
          
@@ -137,6 +146,9 @@ public class DashboardService {
             tramitesPorMes.put(mes.toString(), count); 
         } 
         return tramitesPorMes; 
+<<<<<<< HEAD
+>>>>>>> Mafer
+=======
 >>>>>>> Mafer
     } 
      
@@ -153,7 +165,11 @@ public class DashboardService {
         return clientesPorMes; 
     } 
 <<<<<<< HEAD
+<<<<<<< HEAD
 } 
+=======
+}
+>>>>>>> Mafer
 =======
 }
 >>>>>>> Mafer

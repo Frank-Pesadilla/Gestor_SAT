@@ -1,5 +1,6 @@
 package com.gestor.gestor_sat.controller; 
 <<<<<<< HEAD
+<<<<<<< HEAD
 import com.gestor.gestor_sat.dto.EstadisticasDTO; 
 import com.gestor.gestor_sat.service.DashboardService; 
 import lombok.RequiredArgsConstructor; 
@@ -8,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping; 
 import org.springframework.web.bind.annotation.RestController; 
 =======
+=======
+>>>>>>> Mafer
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping; 
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +20,9 @@ import com.gestor.gestor_sat.dto.EstadisticasDTO;
 import com.gestor.gestor_sat.service.DashboardService;
 
 import lombok.RequiredArgsConstructor; 
+<<<<<<< HEAD
+>>>>>>> Mafer
+=======
 >>>>>>> Mafer
 @RestController 
 @RequestMapping("/api/dashboard") 
@@ -29,7 +35,11 @@ EstadisticasDTO estadisticas = dashboardService.obtenerEstadisticas();
 return ResponseEntity.ok(estadisticas); 
 } 
 <<<<<<< HEAD
+<<<<<<< HEAD
 } 
+=======
+} 
+>>>>>>> Mafer
 =======
 } 
 >>>>>>> Mafer

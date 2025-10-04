@@ -1,12 +1,15 @@
 package com.gestor.gestor_sat.service.security; 
  
 <<<<<<< HEAD
+<<<<<<< HEAD
 import org.springframework.beans.factory.annotation.Value; 
 import org.springframework.stereotype.Service; 
 import javax.crypto.Cipher; 
 import javax.crypto.spec.SecretKeySpec; 
 import java.util.Base64; 
 =======
+=======
+>>>>>>> Mafer
 import java.util.Base64; 
 
 import javax.crypto.Cipher;
@@ -14,6 +17,9 @@ import javax.crypto.spec.SecretKeySpec;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service; 
+<<<<<<< HEAD
+>>>>>>> Mafer
+=======
 >>>>>>> Mafer
  
 @Service 
@@ -49,7 +55,11 @@ public class AESEncryptionService {
         } 
     } 
 <<<<<<< HEAD
+<<<<<<< HEAD
 }
+=======
+} 
+>>>>>>> Mafer
 =======
 } 
 >>>>>>> Mafer

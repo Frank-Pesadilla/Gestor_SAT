@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 package com.gestor.gestor_sat.dto;
 
 import jakarta.validation.constraints.Email;
@@ -35,6 +36,8 @@ public class DatosPlataformaDTO {
     private String contrasenaConsultaGeneral;
     private String contrasenaRegahe;
 =======
+=======
+>>>>>>> Mafer
 package com.gestor.gestor_sat.dto; 
  
 import jakarta.validation.constraints.NotBlank;
@@ -60,5 +63,8 @@ private String contrasenaRenap;
 private String usuarioMinfin; 
 private String contrasenaMinfin; 
 private String observaciones; 
+<<<<<<< HEAD
+>>>>>>> Mafer
+=======
 >>>>>>> Mafer
 }

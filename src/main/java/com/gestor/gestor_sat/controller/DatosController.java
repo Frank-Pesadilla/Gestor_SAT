@@ -1,6 +1,7 @@
 package com.gestor.gestor_sat.controller; 
  
 <<<<<<< HEAD
+<<<<<<< HEAD
 import com.gestor.gestor_sat.dto.DatosPlataformaDTO; 
 import com.gestor.gestor_sat.service.DatosService; 
 import jakarta.validation.Valid; 
@@ -8,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity; 
 import org.springframework.web.bind.annotation.*; 
 =======
+=======
+>>>>>>> Mafer
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +24,9 @@ import com.gestor.gestor_sat.service.DatosService;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+<<<<<<< HEAD
+>>>>>>> Mafer
+=======
 >>>>>>> Mafer
  
 @RestController 
@@ -44,7 +50,11 @@ public class DatosController {
         return ResponseEntity.ok(datos); 
     } 
 <<<<<<< HEAD
+<<<<<<< HEAD
 } 
+=======
+}
+>>>>>>> Mafer
 =======
 }
 >>>>>>> Mafer
