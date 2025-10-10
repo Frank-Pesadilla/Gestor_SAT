@@ -8,14 +8,12 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+
 @Repository
-public interface ClienteRepository extends JpaRepository<Cliente, Long> {
-    
+// Cambia la firma para extender JpaSpecificationExecutor
+public interface ClienteRepository extends JpaRepository<Cliente, Long>, org.springframework.data.jpa.repository.JpaSpecificationExecutor<Cliente> {
     Optional<Cliente> findByDpi(String dpi);
-    
     boolean existsByDpi(String dpi);
-    
-    @Query("SELECT CASE WHEN COUNT(c) > 0 THEN true ELSE false END FROM Cliente c WHERE c.usuario.idUsuario = :idUsuario")
     boolean existsByUsuarioId(Long idUsuario);
 
     Optional<Cliente> findByUsuarioIdUsuario(Long idUsuario);
