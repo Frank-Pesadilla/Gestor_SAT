@@ -106,4 +106,14 @@ public class CustomExceptions {
             super("Error al almacenar el archivo: " + mensaje);
         }
     }
+
+    public static class RecursoNoEncontradoException extends RuntimeException {
+        public RecursoNoEncontradoException(String mensaje) {
+            super(mensaje);
+        }
+
+        public RecursoNoEncontradoException(String recurso, Long id) {
+            super("No se encontró " + recurso + " con ID: " + id);
+        }
+    }
 }
