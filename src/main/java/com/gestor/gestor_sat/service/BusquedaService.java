@@ -3,6 +3,7 @@ package com.gestor.gestor_sat.service;
 import com.gestor.gestor_sat.dto.BusquedaAvanzadaDTO;
 import com.gestor.gestor_sat.dto.ClienteResponseDTO;
 import com.gestor.gestor_sat.entity.Cliente;
+import com.gestor.gestor_sat.exception.CustomExceptions;
 import com.gestor.gestor_sat.mapper.ClienteMapper;
 import com.gestor.gestor_sat.repository.ClienteRepository;
 import com.gestor.gestor_sat.repository.spec.ClienteSpecifications;
@@ -24,7 +25,7 @@ public class BusquedaService {
             (f.getDpi()==null || f.getDpi().isBlank()) &&
             f.getFechaInicio()==null && f.getFechaFin()==null &&
             (f.getEstado()==null || f.getEstado().isBlank())) {
-            throw new IllegalArgumentException("Debe proporcionar al menos un filtro");
+            throw new CustomExceptions.FiltrosVaciosException("Debe proporcionar al menos un filtro");
         }
 
         Specification<Cliente> spec = Specification.where(ClienteSpecifications.nombreContains(f.getNombre()))

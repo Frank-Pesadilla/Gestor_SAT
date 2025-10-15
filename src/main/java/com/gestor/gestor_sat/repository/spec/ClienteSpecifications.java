@@ -19,7 +19,7 @@ public class ClienteSpecifications {
         return (root, q, cb) ->
             (dpi == null || dpi.isBlank())
                 ? cb.conjunction()
-                : cb.equal(root.get("dpi"), dpi);
+                : cb.like(root.get("dpi"), "%" + dpi + "%");
     }
 
     // join a consultaTramites para filtrar por fecha

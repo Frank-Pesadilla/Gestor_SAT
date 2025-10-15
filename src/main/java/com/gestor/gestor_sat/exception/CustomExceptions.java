@@ -116,4 +116,17 @@ public class CustomExceptions {
             super("No se encontró " + recurso + " con ID: " + id);
         }
     }
+
+    public static class NITInvalidoException extends RuntimeException {
+        public NITInvalidoException(String mensaje) {
+            super(mensaje);
+        }
+    }
+
+    // Búsqueda avanzada
+    public static class FiltrosVaciosException extends RuntimeException {
+        public FiltrosVaciosException(String mensaje) {
+            super(mensaje);
+        }
+    }
 }

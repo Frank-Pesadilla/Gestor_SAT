@@ -108,6 +108,18 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(CustomExceptions.NITInvalidoException.class)
+    public ResponseEntity<ErrorResponse> handleNITInvalido(CustomExceptions.NITInvalidoException ex) {
+    log.error("NIT inválido: {}", ex.getMessage());
+    return buildErrorResponse(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(CustomExceptions.FiltrosVaciosException.class)
+    public ResponseEntity<ErrorResponse> handleFiltrosVacios(CustomExceptions.FiltrosVaciosException ex) {
+        log.error("Búsqueda sin filtros: {}", ex.getMessage());
+        return buildErrorResponse(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleGenericException(Exception ex) {
         log.error("Error inesperado: ", ex);

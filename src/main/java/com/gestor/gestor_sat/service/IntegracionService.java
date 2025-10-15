@@ -1,6 +1,7 @@
 package com.gestor.gestor_sat.service;
 
 import com.gestor.gestor_sat.dto.SATResponseDTO;
+import com.gestor.gestor_sat.exception.CustomExceptions;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,7 @@ public class IntegracionService {
     // Valida formato básico de NIT de Guatemala: dígitos + posible guion y dígito verificador
     private void validarNit(String nit) {
         if (nit == null || !nit.matches("^[0-9]{6,12}-?[0-9Xx]$")) {
-            throw new IllegalArgumentException("Formato de NIT inválido");
+            throw new CustomExceptions.NITInvalidoException("Formato de NIT inválido");
         }
     }
 
