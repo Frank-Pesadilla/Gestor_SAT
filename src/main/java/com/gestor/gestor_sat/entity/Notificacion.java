@@ -43,4 +43,11 @@ public class Notificacion {
     @CreationTimestamp
     @Column(name = "fecha", nullable = false, updatable = false)
     private LocalDateTime fecha;
+
+    @Column(name = "fecha_expiracion", nullable = false)
+    private LocalDateTime fechaExpiracion;
+
+    @Column(name = "expirada", nullable = false)
+    @Builder.Default
+    private Boolean expirada = false;
 }

@@ -22,4 +22,7 @@ public class NotificacionResponseDTO {
     private TipoNotificacion tipo;
     private Boolean leida;
     private LocalDateTime fecha;
+    private LocalDateTime fechaExpiracion;
+    private Boolean expirada;
+    private Long diasRestantes; // Días hasta que expire
 }
