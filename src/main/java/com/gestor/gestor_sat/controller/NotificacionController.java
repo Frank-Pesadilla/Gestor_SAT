@@ -98,4 +98,16 @@ public class NotificacionController {
 
         return ResponseEntity.ok(response);
     }
+
+    /**
+     * Lista notificaciones próximas a expirar (dentro de los próximos X días configurados)
+     */
+    @GetMapping("/usuario/{id}/proximas-expirar")
+    public ResponseEntity<List<NotificacionResponseDTO>> listarProximasAExpirar(@PathVariable Long id) {
+        log.info("GET /api/notificaciones/usuario/{}/proximas-expirar - Listando notificaciones próximas a expirar", id);
+
+        List<NotificacionResponseDTO> notificaciones = notificacionService.listarProximasAExpirar(id);
+
+        return ResponseEntity.ok(notificaciones);
+    }
 }
