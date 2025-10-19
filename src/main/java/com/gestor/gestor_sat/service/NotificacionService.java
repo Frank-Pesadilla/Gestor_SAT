@@ -10,11 +10,13 @@ import com.gestor.gestor_sat.repository.NotificacionRepository;
 import com.gestor.gestor_sat.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,6 +34,12 @@ public class NotificacionService {
     private final NotificacionMapper notificacionMapper;
     private final JavaMailSender mailSender;
 
+    @Value("${app.notificaciones.dias-expiracion:30}")
+    private int diasExpiracion;
+
+    @Value("${app.notificaciones.dias-alerta-expiracion:7}")
+    private int diasAlertaExpiracion;
+
     /**
      * Tarea 3: Crea una notificación para un usuario
      * @param idUsuario ID del usuario destinatario
@@ -47,16 +55,22 @@ public class NotificacionService {
         Usuario usuario = usuarioRepository.findById(idUsuario)
                 .orElseThrow(() -> new CustomExceptions.UsuarioNoEncontradoException(idUsuario));
 
+        // Calcular fecha de expiración
+        LocalDateTime fechaExpiracion = LocalDateTime.now().plusDays(diasExpiracion);
+
         // Tarea 7: Crear y guardar la notificación en BD
         Notificacion notificacion = Notificacion.builder()
                 .usuario(usuario)
                 .mensaje(mensaje)
                 .tipo(tipo)
                 .leida(false)
+                .fechaExpiracion(fechaExpiracion)
+                .expirada(false)
                 .build();
 
         Notificacion notificacionGuardada = notificacionRepository.save(notificacion);
-        log.info("Notificación creada exitosamente con ID: {}", notificacionGuardada.getIdNotificacion());
+        log.info("Notificación creada exitosamente con ID: {} - Expira: {}",
+                notificacionGuardada.getIdNotificacion(), fechaExpiracion);
 
         return notificacionMapper.toResponseDTO(notificacionGuardada);
     }
@@ -113,20 +127,21 @@ public class NotificacionService {
     }
 
     /**
-     * Tarea 8: Lista todas las notificaciones de un usuario
+     * Tarea 8: Lista todas las notificaciones NO EXPIRADAS de un usuario
      * @param idUsuario ID del usuario
      * @return Lista de notificaciones
      */
     @Transactional(readOnly = true)
     public List<NotificacionResponseDTO> listarNotificacionesUsuario(Long idUsuario) {
-        log.info("Listando notificaciones del usuario ID: {}", idUsuario);
+        log.info("Listando notificaciones NO EXPIRADAS del usuario ID: {}", idUsuario);
 
         // Validar que el usuario existe
         if (!usuarioRepository.existsById(idUsuario)) {
             throw new CustomExceptions.UsuarioNoEncontradoException(idUsuario);
         }
 
-        List<Notificacion> notificaciones = notificacionRepository.findByUsuarioIdUsuarioOrderByFechaDesc(idUsuario);
+        List<Notificacion> notificaciones = notificacionRepository
+                .findByUsuarioIdUsuarioAndExpiradaFalseOrderByFechaDesc(idUsuario);
 
         return notificaciones.stream()
                 .map(notificacionMapper::toResponseDTO)
@@ -155,18 +170,18 @@ public class NotificacionService {
     }
 
     /**
-     * Lista notificaciones no leídas de un usuario
+     * Lista notificaciones NO EXPIRADAS y no leídas de un usuario
      */
     @Transactional(readOnly = true)
     public List<NotificacionResponseDTO> listarNotificacionesNoLeidas(Long idUsuario) {
-        log.info("Listando notificaciones no leídas del usuario ID: {}", idUsuario);
+        log.info("Listando notificaciones NO EXPIRADAS y no leídas del usuario ID: {}", idUsuario);
 
         if (!usuarioRepository.existsById(idUsuario)) {
             throw new CustomExceptions.UsuarioNoEncontradoException(idUsuario);
         }
 
         List<Notificacion> notificaciones = notificacionRepository
-                .findByUsuarioIdUsuarioAndLeidaFalseOrderByFechaDesc(idUsuario);
+                .findByUsuarioIdUsuarioAndLeidaFalseAndExpiradaFalseOrderByFechaDesc(idUsuario);
 
         return notificaciones.stream()
                 .map(notificacionMapper::toResponseDTO)
@@ -174,7 +189,7 @@ public class NotificacionService {
     }
 
     /**
-     * Cuenta notificaciones no leídas de un usuario
+     * Cuenta notificaciones NO EXPIRADAS y no leídas de un usuario
      */
     @Transactional(readOnly = true)
     public Long contarNotificacionesNoLeidas(Long idUsuario) {
@@ -182,7 +197,29 @@ public class NotificacionService {
             throw new CustomExceptions.UsuarioNoEncontradoException(idUsuario);
         }
 
-        return notificacionRepository.countByUsuarioIdUsuarioAndLeidaFalse(idUsuario);
+        return notificacionRepository.countByUsuarioIdUsuarioAndLeidaFalseAndExpiradaFalse(idUsuario);
+    }
+
+    /**
+     * Lista notificaciones próximas a expirar
+     */
+    @Transactional(readOnly = true)
+    public List<NotificacionResponseDTO> listarProximasAExpirar(Long idUsuario) {
+        log.info("Listando notificaciones próximas a expirar para usuario ID: {}", idUsuario);
+
+        if (!usuarioRepository.existsById(idUsuario)) {
+            throw new CustomExceptions.UsuarioNoEncontradoException(idUsuario);
+        }
+
+        LocalDateTime ahora = LocalDateTime.now();
+        LocalDateTime fechaLimite = ahora.plusDays(diasAlertaExpiracion);
+
+        List<Notificacion> notificaciones = notificacionRepository
+                .findProximasAExpirar(idUsuario, ahora, fechaLimite);
+
+        return notificaciones.stream()
+                .map(notificacionMapper::toResponseDTO)
+                .collect(Collectors.toList());
     }
 
     /**
