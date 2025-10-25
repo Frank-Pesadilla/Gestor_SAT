@@ -24,4 +24,6 @@ public class ConsultaTramiteCreateDTO {
     private LocalDate fechaTramite;
 
     private TramiteEstado estado;
+
+    private String createdBy; // <-- NUEVO
 }
